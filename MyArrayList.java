@@ -5,7 +5,6 @@
     ArrayLists do not shrink unless the trimToSize() method is called 
 
  TODO: Add the following methods
-    add
     remove
     get
     print
@@ -85,5 +84,55 @@ public class MyArrayList<T> {
     private void grow() {
         int newLength = (int)(array.length * GROWTH_FACTOR);
         Arrays.copyOf(array, newLength);
+    }
+
+    /**
+     * Prints all values in internal array with indexes inside the range {@code (index >= 0 && index < size())}
+     */
+    public void print() {
+        System.out.println(formatArrayString(0, size));
+    }
+
+    /**
+     * Prints the following object data: entire internal {@link #array} contents, internal {@link #array} 
+     * length, value {@link #size} property, and values of {@link #GROWTH_FACTOR} and {@link #DEFAULT_INIT_CAPACITY} 
+     * static constants
+     */
+    public void debugPrint() {
+        System.out.println(
+            "array contents: " + formatArrayString(0, array.length) + 
+            "\narray length: " + array.length +
+            "\nArrayList size: " + size +
+            "\ngrowth factor: " + GROWTH_FACTOR +
+            "\ndefault initial capacity: " + DEFAULT_INIT_CAPACITY 
+        );
+    }
+
+    /**
+     * Helper method that generates and returns formatted string representation of array elements within provided index bounds
+     * @param startIndex inclusive starting index of elements to format
+     * @param endIndex exclusive ending index of elements to format
+     * @return string representation of internal array
+     * @throws IndexOutOfBoundsException if either index parameter is out of range {@code (index < 0 || index > array.length)}
+     */
+    private String formatArrayString(int startIndex, int endIndex) throws IndexOutOfBoundsException{
+        if (startIndex < 0 || startIndex > array.length)
+            throw new IndexOutOfBoundsException("startIndex is outside range (startIndex < 0 || startIndex > array.length)");
+        
+        if (endIndex < 0 || endIndex > array.length)
+            throw new IndexOutOfBoundsException("endIndex is outside range (endIndex < 0 || endIndex > array.length)");
+
+        String output = "[";
+
+        for (int i = startIndex; i < endIndex; i++) {
+            output += array[i] + ", ";
+        }
+
+        if (output.length() > 1)
+            output = output.substring(0, output.length() - 2);
+            
+        output += "]";
+
+        return output;
     }
 }
