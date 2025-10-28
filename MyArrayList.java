@@ -58,11 +58,10 @@ public class MyArrayList<T> {
      * @throws IndexOutOfBoundsException if index is out of range {@code (index < 0 || index > size())}
      */
     public void add(int index, T el) throws IndexOutOfBoundsException {
-        //! NOTE DOES NOT WORK IF SIZE IS 0 OR 1
         if (index < 0 || index > size)
             throw new IndexOutOfBoundsException("Index is outside range (index < 0 || index > size())");
         
-        if (size == array.length)
+        if (size >= array.length)
             grow();
 
         for (int i = size; i > index; i--) {
@@ -85,8 +84,14 @@ public class MyArrayList<T> {
      * Helper method that grows the internal array by {@link #GROWTH_FACTOR}
      */
     private void grow() {
-        int newLength = (int)(array.length * GROWTH_FACTOR);
-        Arrays.copyOf(array, newLength);
+        int newLength;
+
+        if (array.length == 0 || array.length == 1)
+            newLength = array.length + 1;
+        else
+            newLength = (int)(array.length * GROWTH_FACTOR);
+
+        array = Arrays.copyOf(array, newLength);
     }
 
     /**
