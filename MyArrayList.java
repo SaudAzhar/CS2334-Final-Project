@@ -27,7 +27,7 @@ public class MyArrayList<T> {
     private static final int DEFAULT_INIT_CAPACITY = 10;
 
     /**
-     * Default constructor. Constructs ArrayList with DEFAULT_INIT_CAPACITY
+     * Default constructor. Constructs ArrayList with {@link #DEFAULT_INIT_CAPACITY}
      */
     public MyArrayList() {
         this(DEFAULT_INIT_CAPACITY);
@@ -43,7 +43,44 @@ public class MyArrayList<T> {
     }
 
     /**
-     * Helper method that grows the internal array by GROWTH_FACTOR
+     * Adds element to end of the list
+     * @param el element to add
+     */
+    public void add(T el) {
+        add(size, el);
+    }
+
+    /**
+     * Inserts element at specified index. Shifts element currently at that index and all subsequent elements to the right
+     * @param index index at which element is to be inserted
+     * @param el    element to be inserted
+     * @throws IndexOutOfBoundsException if index is out of range {@code (index < 0 || index > size())}
+     */
+    public void add(int index, T el) throws IndexOutOfBoundsException {
+        if (index < 0 || index > size)
+            throw new IndexOutOfBoundsException("Index is outside range (index < 0 || index > size())");
+        
+        if (size == array.length)
+            grow();
+
+        for (int i = size; i > index; i--) {
+            array[i] = array[i - 1];
+        }
+
+        array[index] = el;
+        
+    }
+
+    /**
+     * Get number of elements in list
+     * @return number of elements in list
+     */
+    public int size() {
+        return size;
+    }
+
+    /**
+     * Helper method that grows the internal array by {@link #GROWTH_FACTOR}
      */
     private void grow() {
         int newLength = (int)(array.length * GROWTH_FACTOR);
