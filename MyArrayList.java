@@ -12,15 +12,29 @@
  */
 
 public class MyArrayList<T> {
+    /** Internal array. Will store objects of type T */
     private Object[] array;
+
+    /** Tracks how much of internal array is being used */
     private int size;
+
+    /** Factor array should grow by */
     private static final double GROWTH_FACTOR = 1.5;
+
+    /** Default length of internal array */
     private static final int DEFAULT_INIT_CAPACITY = 10;
 
+    /**
+     * Default constructor. Constructs ArrayList with DEFAULT_INIT_CAPACITY
+     */
     public MyArrayList() {
         this(DEFAULT_INIT_CAPACITY);
     }
 
+    /**
+     * Overloaded constructor
+     * @param initialCapacity initial length of internal array
+     */
     public MyArrayList(int initialCapacity) {
         array = new Object[initialCapacity];
         size = 0;
