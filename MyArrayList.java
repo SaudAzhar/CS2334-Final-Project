@@ -7,7 +7,6 @@
  TODO: Add the following methods
     remove
     get
-    print
  */
 
 import java.util.Arrays;
@@ -35,8 +34,11 @@ public class MyArrayList<T> {
     /**
      * Overloaded constructor
      * @param initialCapacity initial length of internal array
+     * @throws IllegalArgumentException if initialCapacity is negative
      */
-    public MyArrayList(int initialCapacity) {
+    public MyArrayList(int initialCapacity) throws IllegalArgumentException {
+        if (initialCapacity < 0)
+            throw new IllegalArgumentException("Initial capacity cannot be less than 0");
         array = new Object[initialCapacity];
         size = 0;
     }
@@ -56,6 +58,7 @@ public class MyArrayList<T> {
      * @throws IndexOutOfBoundsException if index is out of range {@code (index < 0 || index > size())}
      */
     public void add(int index, T el) throws IndexOutOfBoundsException {
+        //! NOTE DOES NOT WORK IF SIZE IS 0 OR 1
         if (index < 0 || index > size)
             throw new IndexOutOfBoundsException("Index is outside range (index < 0 || index > size())");
         
@@ -67,7 +70,7 @@ public class MyArrayList<T> {
         }
 
         array[index] = el;
-        
+        size++;
     }
 
     /**
@@ -130,7 +133,7 @@ public class MyArrayList<T> {
 
         if (output.length() > 1)
             output = output.substring(0, output.length() - 2);
-            
+
         output += "]";
 
         return output;
