@@ -11,6 +11,8 @@
     print
  */
 
+import java.util.Arrays;
+
 public class MyArrayList<T> {
     /** Internal array. Will store objects of type T */
     private Object[] array;
@@ -38,5 +40,13 @@ public class MyArrayList<T> {
     public MyArrayList(int initialCapacity) {
         array = new Object[initialCapacity];
         size = 0;
+    }
+
+    /**
+     * Helper method that grows the internal array by GROWTH_FACTOR
+     */
+    private void grow() {
+        int newLength = (int)(array.length * GROWTH_FACTOR);
+        Arrays.copyOf(array, newLength);
     }
 }
