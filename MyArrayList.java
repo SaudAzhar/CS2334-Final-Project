@@ -18,7 +18,7 @@ public class MyArrayList<T> {
     private static final int DEFAULT_INIT_CAPACITY = 10;
 
     public MyArrayList() {
-        MyArrayList(DEFAULT_INIT_CAPACITY);
+        this(DEFAULT_INIT_CAPACITY);
     }
 
     public MyArrayList(int initialCapacity) {
