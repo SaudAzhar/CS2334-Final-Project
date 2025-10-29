@@ -3,10 +3,6 @@
     Default internal length of ArrayList arrays is 10
     ArrayLists grow by a factor of 1.5
     ArrayLists do not shrink unless the trimToSize() method is called 
-
- TODO: Add the following methods
-    remove
-    get
  */
 
 import java.util.Arrays;
@@ -71,7 +67,45 @@ public class MyArrayList<T> {
         array[index] = el;
         size++;
     }
-
+    
+    /**
+     * Returns the element at the specified index
+     * @param index index of element to return
+     * @return the element at the given index
+     * @throws IndexOutOfBoundsException if index is out of range (index < 0 || index >= size())
+     */
+    
+    public T get(int index) throws IndexOutOfBoundsException {
+    	if (index < 0 || index >= size) 
+    		throw new IndexOutOfBoundsException("Index is outside range (index , 0 || index >= size())");
+    	
+    	return (T) array[index];
+    }
+    
+    /**
+     * Removes the element at the specified index. Shifts remaining elements to the left.
+     * @param index index of element to remove
+     * @return the element that was removed
+     * @throws IndexOutOfBoundsException if index is out of range (index < 0 || index >= size())
+     */
+    
+    public T remove(int index) throws IndexOutOfBoundsException {
+        if (index < 0 || index > size)
+        	throw new IndexOutOfBoundsException("Index is outside range (index , 0 || index >= size())");
+        
+        T removedElement = (T) array[index];
+        
+        for(int i = index; i < size - 1; i++) {
+        	array[i] = array[i + 1];
+        }
+        
+        array[size - 1] = null;
+        size--;
+        
+        return removedElement;    	
+    }
+    
+    
     /**
      * Get number of elements in list
      * @return number of elements in list
