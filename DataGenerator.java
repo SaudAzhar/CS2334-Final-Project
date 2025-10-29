@@ -18,7 +18,7 @@ public class DataGenerator {
     private static final double MAX_DOUBLE_VALUE = 9999.999;
 
     /**
-     * Generates a randomized string with a random size between {@link #MIN_STRING_LENGTH} and {@link #MAX_STRING_LENGTH} inclusive
+     * Generates a randomized string with a random length between {@link #MIN_STRING_LENGTH} and {@link #MAX_STRING_LENGTH} inclusive
      * @return a randomly generated string
      */
     public static String generateString() {
@@ -33,7 +33,11 @@ public class DataGenerator {
         return output;
     }
 
+    /**
+     * Generates a randomized double with a random value between {@link #MIN_DOUBLE_VALUE} and {@link #MAX_DOUBLE_VALUE} inclusive
+     * @return a randomly generated double
+     */
     public static double generateDouble() {
-        return (Math.random() * (MAX_DOUBLE_VALUE - MIN_DOUBLE_VALUE + 1)) + MIN_DOUBLE_VALUE;
+        return (Math.random() * (MAX_DOUBLE_VALUE - MIN_DOUBLE_VALUE)) + MIN_DOUBLE_VALUE;
     }
 }
