@@ -11,7 +11,7 @@ class George {
 public class ArrayListTests {
     public static void main(String[] args) {
         MyArrayList<String> arr = new MyArrayList<String>(2);
-        arr.populateRandomDoubles(20);;
-        arr.debugPrint();
+        arr.populateRandomStrings(1000000);
+        arr.remove(arr.size() - 1);
     }
 }

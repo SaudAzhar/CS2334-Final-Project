@@ -40,16 +40,8 @@ public class MyArrayList<T> {
     }
 
     /**
-     * Adds element to end of the list
-     * @param el element to add
-     */
-    public void add(T el) {
-        add(size, el);
-    }
-
-
-    /**
-     * Clears and populates array with only new randomly generated strings.
+     * Efficient method that clears and populates array with only new randomly generated strings. Does not 
+     * log any data.
      * Warning: Can only be used if type T is the String class. Function will not check to see if T is valid.
      * @param quantity amount of strings to generate
      */
@@ -63,7 +55,8 @@ public class MyArrayList<T> {
     }
 
     /**
-     * Clears and populates array with only new randomly generated doubles.
+     * Efficient method that clears and populates array with only new randomly generated strings. Does not 
+     * log any data.
      * Warning: Can only be used if type T is the Double class. Function will not check to see if T is valid.
      * @param quantity amount of doubles to generate
      */
@@ -77,6 +70,14 @@ public class MyArrayList<T> {
     }
 
     /**
+     * Adds element to end of the list
+     * @param el element to add
+     */
+    public void add(T el) {
+        add(size, el);
+    }
+
+    /**
      * Inserts element at specified index. Shifts element currently at that index and all subsequent elements to the right
      * @param index index at which element is to be inserted
      * @param el    element to be inserted
@@ -85,6 +86,13 @@ public class MyArrayList<T> {
     public void add(int index, T el) throws IndexOutOfBoundsException {
         if (index < 0 || index > size)
             throw new IndexOutOfBoundsException("Index is outside range (index < 0 || index > size())");
+
+        System.out.println(
+            "Single add starting data: \n" +
+            "Timestamp: " + System.nanoTime() + " ns\n" +
+            "Total memory used: " + Runtime.getRuntime().totalMemory() + " Mb\n" +
+            "Total free memory: " + Runtime.getRuntime().freeMemory() + " Mb\n" 
+        );
         
         if (size >= array.length)
             grow();
@@ -95,6 +103,13 @@ public class MyArrayList<T> {
 
         array[index] = el;
         size++;
+
+        System.out.println(
+            "Ending data: \n" +
+            "Timestamp: " + System.nanoTime() + " ns\n" +
+            "Total memory used: " + Runtime.getRuntime().totalMemory() + " Mb\n" +
+            "Total free memory: " + Runtime.getRuntime().freeMemory() + " Mb\n" 
+        );
     }
     
     /**
@@ -108,8 +123,22 @@ public class MyArrayList<T> {
     public T get(int index) throws IndexOutOfBoundsException {
     	if (index < 0 || index >= size) 
     		throw new IndexOutOfBoundsException("Index is outside range (index , 0 || index >= size())");
+
+        System.out.println(
+            "Single get starting data: \n" +
+            "Timestamp: " + System.nanoTime() + " ns\n" +
+            "Total memory used: " + Runtime.getRuntime().totalMemory() + " Mb\n" +
+            "Total free memory: " + Runtime.getRuntime().freeMemory() + " Mb\n" 
+        );
     	
-    	return (T) array[index];
+    	T output = (T) array[index];
+        System.out.println(
+            "Single get ending data: \n" +
+            "Timestamp: " + System.nanoTime() + " ns\n" +
+            "Total memory used: " + Runtime.getRuntime().totalMemory() + " Mb\n" +
+            "Total free memory: " + Runtime.getRuntime().freeMemory() + " Mb\n" 
+        );
+        return output;
     }
     
     /**
@@ -122,6 +151,13 @@ public class MyArrayList<T> {
     public T remove(int index) throws IndexOutOfBoundsException {
         if (index < 0 || index > size)
         	throw new IndexOutOfBoundsException("Index is outside range (index , 0 || index >= size())");
+
+        System.out.println(
+            "Single remove starting data: \n" +
+            "Timestamp: " + System.nanoTime() + " ns\n" +
+            "Total memory used: " + Runtime.getRuntime().totalMemory() + " Mb\n" +
+            "Total free memory: " + Runtime.getRuntime().freeMemory() + " Mb\n" 
+        );
         
         @SuppressWarnings("unchecked")
         T removedElement = (T) array[index];
@@ -133,6 +169,13 @@ public class MyArrayList<T> {
         array[size - 1] = null;
         size--;
         
+        System.out.println(
+            "Single remove ending data: \n" +
+            "Timestamp: " + System.nanoTime() + " ns\n" +
+            "Total memory used: " + Runtime.getRuntime().totalMemory() + " Mb\n" +
+            "Total free memory: " + Runtime.getRuntime().freeMemory() + " Mb\n" 
+        );
+
         return removedElement;    	
     }
     
