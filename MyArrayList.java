@@ -47,6 +47,35 @@ public class MyArrayList<T> {
         add(size, el);
     }
 
+
+    /**
+     * Clears and populates array with only new randomly generated strings.
+     * Warning: Can only be used if type T is the String class. Function will not check to see if T is valid.
+     * @param quantity amount of strings to generate
+     */
+    public void populateRandomStrings(int quantity) {
+        array = new Object[quantity];
+        size = quantity;
+
+        for (int i = 0; i < array.length; i++) {
+            array[i] = DataGenerator.generateString();
+        }
+    }
+
+    /**
+     * Clears and populates array with only new randomly generated doubles.
+     * Warning: Can only be used if type T is the Double class. Function will not check to see if T is valid.
+     * @param quantity amount of doubles to generate
+     */
+    public void populateRandomDoubles(int quantity) {
+        array = new Object[quantity];
+        size = quantity;
+
+        for (int i = 0; i < array.length; i++) {
+            array[i] = DataGenerator.generateDouble();
+        }
+    }
+
     /**
      * Inserts element at specified index. Shifts element currently at that index and all subsequent elements to the right
      * @param index index at which element is to be inserted
@@ -75,6 +104,7 @@ public class MyArrayList<T> {
      * @throws IndexOutOfBoundsException if index is out of range (index < 0 || index >= size())
      */
     
+    @SuppressWarnings("unchecked")
     public T get(int index) throws IndexOutOfBoundsException {
     	if (index < 0 || index >= size) 
     		throw new IndexOutOfBoundsException("Index is outside range (index , 0 || index >= size())");
@@ -93,6 +123,7 @@ public class MyArrayList<T> {
         if (index < 0 || index > size)
         	throw new IndexOutOfBoundsException("Index is outside range (index , 0 || index >= size())");
         
+        @SuppressWarnings("unchecked")
         T removedElement = (T) array[index];
         
         for(int i = index; i < size - 1; i++) {
