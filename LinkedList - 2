@@ -6,6 +6,7 @@ class Node {
     public int Data;
     public int nextNode;
 
+
     public Node(int DataP, int nextNodeP) {
         this.Data = DataP;
         this.nextNode = nextNodeP;
