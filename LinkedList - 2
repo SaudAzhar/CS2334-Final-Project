@@ -1,0 +1,238 @@
+import java.util.Scanner;
+
+class Node {
+    // Public Data: INTEGER
+    // Public nextNode: INTEGER
+    public int Data;
+    public int nextNode;
+
+    public Node(int DataP, int nextNodeP) {
+        this.Data = DataP;
+        this.nextNode = nextNodeP;
+    }
+}
+
+public class LinkedListArray {
+    static Node[] linkedList = new Node[10];
+    static int startPointer = -1;
+    static int emptyList = 0;
+    static Scanner sc = new Scanner(System.in);
+
+    // Initialize Linked List
+    public static void initializeList() {
+        for (int i = 0; i < 9; i++) {
+            linkedList[i] = new Node(0, i + 1);
+        }
+        linkedList[9] = new Node(0, -1);
+        emptyList = 0;
+        startPointer = -1;
+    }
+
+    // Add Node at the end
+    public static boolean addNode(int currentPointer) {
+        if (emptyList < 0 || emptyList > 9) {
+            System.out.println("No space left in linked list.");
+            return false;
+        }
+
+        System.out.print("Enter the data to add: ");
+        int data = sc.nextInt();
+
+        int freeList = emptyList;
+        emptyList = linkedList[emptyList].nextNode;
+        linkedList[freeList] = new Node(data, -1);
+
+        if (startPointer == -1) {
+            startPointer = freeList;
+        } else {
+            int previousPointer = startPointer;
+            while (linkedList[previousPointer].nextNode != -1) {
+                previousPointer = linkedList[previousPointer].nextNode;
+            }
+            linkedList[previousPointer].nextNode = freeList;
+        }
+        return true;
+    }
+
+    // Delete Node by value
+    public static boolean deleteNode() {
+        if (startPointer == -1) {
+            System.out.println("List is empty.");
+            return false;
+        }
+
+        System.out.print("Enter the data to delete: ");
+        int data = sc.nextInt();
+
+        int currentPointer = startPointer;
+        int previousPointer = -1;
+
+        while (currentPointer != -1 && linkedList[currentPointer].Data != data) {
+            previousPointer = currentPointer;
+            currentPointer = linkedList[currentPointer].nextNode;
+        }
+
+        if (currentPointer == -1) {
+            System.out.println("Data not found.");
+            return false;
+        } else {
+            if (currentPointer == startPointer) {
+                startPointer = linkedList[startPointer].nextNode;
+            } else {
+                linkedList[previousPointer].nextNode = linkedList[currentPointer].nextNode;
+            }
+
+            linkedList[currentPointer].Data = 0;
+            linkedList[currentPointer].nextNode = emptyList;
+            emptyList = currentPointer;
+
+            System.out.println("Node deleted successfully.");
+            return true;
+        }
+    }
+
+    // Insert node at specific position
+    public static boolean insertAtPosition(int position) {
+        if (emptyList < 0 || emptyList > 9) {
+            System.out.println("No space left in linked list.");
+            return false;
+        }
+
+        System.out.print("Enter data to insert: ");
+        int data = sc.nextInt();
+
+        int freeList = emptyList;
+        emptyList = linkedList[emptyList].nextNode;
+        linkedList[freeList] = new Node(data, -1);
+
+        if (position == 0 || startPointer == -1) {
+            linkedList[freeList].nextNode = startPointer;
+            startPointer = freeList;
+            System.out.println("Inserted at beginning.");
+            return true;
+        }
+
+        int currentPointer = startPointer;
+        for (int i = 0; i < position - 1; i++) {
+            if (linkedList[currentPointer].nextNode == -1)
+                break;
+            currentPointer = linkedList[currentPointer].nextNode;
+        }
+
+        linkedList[freeList].nextNode = linkedList[currentPointer].nextNode;
+        linkedList[currentPointer].nextNode = freeList;
+
+        System.out.println("Inserted at position " + position);
+        return true;
+    }
+
+    // Insert in the middle
+    public static boolean insertInMiddle() {
+        int length = getLength();
+        if (length == 0)
+            return insertAtPosition(0);
+        else
+            return insertAtPosition(length / 2);
+    }
+
+    // Delete from the middle
+    public static boolean deleteFromMiddle() {
+        int length = getLength();
+        if (length == 0) {
+            System.out.println("List is empty.");
+            return false;
+        }
+        return deleteAtPosition(length / 2);
+    }
+
+    // Delete node at specific position
+    public static boolean deleteAtPosition(int position) {
+        if (startPointer == -1) {
+            System.out.println("List is empty.");
+            return false;
+        }
+
+        int currentPointer = startPointer;
+        int previousPointer = -1;
+
+        for (int i = 0; i < position; i++) {
+            if (currentPointer == -1) {
+                System.out.println("Invalid position.");
+                return false;
+            }
+            previousPointer = currentPointer;
+            currentPointer = linkedList[currentPointer].nextNode;
+        }
+
+        if (currentPointer == -1) {
+            System.out.println("Invalid position.");
+            return false;
+        }
+
+        if (previousPointer == -1)
+            startPointer = linkedList[startPointer].nextNode;
+        else
+            linkedList[previousPointer].nextNode = linkedList[currentPointer].nextNode;
+
+        linkedList[currentPointer].Data = 0;
+        linkedList[currentPointer].nextNode = emptyList;
+        emptyList = currentPointer;
+
+        System.out.println("Deleted node at position " + position);
+        return true;
+    }
+
+    // Get value at specific index
+    public static Integer getNode(int index) {
+        int currentPointer = startPointer;
+        int count = 0;
+
+        while (currentPointer != -1) {
+            if (count == index) {
+                System.out.println("Value at index " + index + " is: " + linkedList[currentPointer].Data);
+                return linkedList[currentPointer].Data;
+            }
+            count++;
+            currentPointer = linkedList[currentPointer].nextNode;
+        }
+
+        System.out.println("Index out of range.");
+        return null;
+    }
+
+    // Display linked list
+    public static void printList() {
+        int currentPointer = startPointer;
+        System.out.print("Linked List: ");
+        while (currentPointer != -1) {
+            System.out.print(linkedList[currentPointer].Data + " -> ");
+            currentPointer = linkedList[currentPointer].nextNode;
+        }
+        System.out.println("None");
+    }
+
+    // Get length of linked list
+    public static int getLength() {
+        int count = 0;
+        int currentPointer = startPointer;
+        while (currentPointer != -1) {
+            count++;
+            currentPointer = linkedList[currentPointer].nextNode;
+        }
+        return count;
+    }
+
+  
+    public static void main(String[] args) {
+        initializeList();
+
+        addNode(startPointer);
+        addNode(startPointer);
+        insertInMiddle();
+        printList();
+
+        getNode(1);
+        deleteFromMiddle();
+        printList();
+    }
+}
